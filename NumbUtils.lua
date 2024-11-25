@@ -1,6 +1,7 @@
 
 local evaluate_poker_hand_ref = evaluate_poker_hand
 function evaluate_poker_hand(hand)
+  evaluate_poker_hand_ref(hand)
   for k, v in pairs(G.jokers.cards) do
     change_acting(v)
   end
