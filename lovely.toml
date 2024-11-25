@@ -1,0 +1,34 @@
+[[patches]]
+[manifest]
+version = "0.2.1.4"
+dump_lua = true
+priority = -9001
+
+[patches.regex]
+target = 'functions/common_events.lua'
+pattern = "(?<indent>[\t ]*)if not extra.edition and \\(extra.mult_mod or extra.Xmult_mod\\)  then\n[\t ]*colour = G.C.MULT\n[\t ]*end\n"
+line_prepend = '$indent'
+position = 'at'
+payload = ''''''
+
+[[patches]]
+[patches.regex]
+target = 'functions/common_events.lua'
+pattern = "(?<indent>[\t ]*)config.type = 'fall'\n[\t ]*config.scale = 0.7\n[\t ]*end"
+line_prepend = '$indent'
+position = 'after'
+payload = '''
+
+if not extra.edition and (extra.mult_mod or extra.Xmult_mod)  then
+  colour = G.C.MULT
+end'''
+
+[[patches]]
+[patches.pattern]
+target = 'functions/misc_functions.lua'
+pattern = '''if v and type(v) == 'table' and v.ability.name == name and (non_debuff or not v.debuff) then'''
+position = 'before'
+payload = '''if v and type(v) == 'table' and ((v.ability.acts_as and v.ability.acts_as == name) or (v.ability.extra and type(v.ability.extra) == "table" and v.ability.extra.acts_as and v.ability.extra.acts_as == name)) and (non_debuff or not v.debuff) then
+  table.insert(jokers, v)
+end'''
+match_indent = true
