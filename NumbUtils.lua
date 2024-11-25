@@ -1,14 +1,15 @@
 
 local evaluate_poker_hand_ref = evaluate_poker_hand
 function evaluate_poker_hand(hand)
-  evaluate_poker_hand_ref(hand)
+  local results = evaluate_poker_hand_ref(hand)
   for k, v in pairs(G.jokers.cards) do
     change_acting(v)
   end
-  evaluate_poker_hand_ref(hand)
+  results = evaluate_poker_hand_ref(hand)
   for k, v in pairs(G.jokers.cards) do
     change_acting(v)
   end
+  return results
 end
 
 function change_acting(joker)
